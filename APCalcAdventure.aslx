@@ -1,0 +1,114 @@
+<!--Saved by Quest 5.7.6606.27193-->
+<asl version="550">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Fun ???">
+    <inherit name="theme_novella" />
+    <gameid>dc6b7199-fac8-4df3-a47a-4b9f5a259ca1</gameid>
+    <version>1.0</version>
+    <firstpublished>2018</firstpublished>
+    <subtitle>An AP Calculus Project</subtitle>
+    <author><![CDATA[Dante & Brian]]></author>
+    <showtitle />
+    <cover>ppHop.gif</cover>
+    <description>AP Calculus Final Project</description>
+    <category>Educational</category>
+    <attr name="autodescription_youarein_useprefix" type="boolean">false</attr>
+    <attr name="autodescription_youcansee" type="int">3</attr>
+    <attr name="autodescription_youcango" type="int">0</attr>
+    <echohyperlinks type="boolean">false</echohyperlinks>
+    <autodisplayverbs />
+  </game>
+  <object name="a room">
+    <inherit name="editor_room" />
+    <descprefix>You are in</descprefix>
+    <objectslistprefix>You can see</objectslistprefix>
+    <description type="script">
+      if (this.flag) {
+        msg ("It is empty save for the bed you are sitting on and a glass of water on top of a small nightstand to your left. The floor is covered in clothing. There is a door a few feet from the foot of the bed.")
+      }
+      else {
+        msg ("It is empty save for the bed you are sitting on and a small nightstand to your left. The floor is covered in clothing. There is a door a few feet from the foot of the bed.")
+      }
+    </description>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <flag />
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>
+    <object name="glass">
+      <inherit name="editor_object" />
+      <visible />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <alias>glass of water</alias>
+      <scenery />
+      <alt type="stringlist">
+        <value>drink</value>
+        <value>glass</value>
+        <value>water</value>
+      </alt>
+      <look>The the water is fizzing slightly.</look>
+      <drink>You drink the water.</drink>
+      <take />
+      <takemsg>You take the glass in hand. Carefull not to spill it.</takemsg>
+      <dropmsg>You place it carefully on the ground.</dropmsg>
+      <ontake type="script">
+        SetObjectFlagOff (a room, "flag")
+      </ontake>
+    </object>
+    <object name="clothing">
+      <inherit name="editor_object" />
+      <visible />
+      <scenery />
+      <look>A beige spongy layer pads the entirety of the floor. It seems to have stuck together. *yuck*</look>
+      <alt type="stringlist">
+        <value>floor</value>
+      </alt>
+      <takemsg>It sticks to the ground.</takemsg>
+    </object>
+    <object name="door">
+      <inherit name="editor_object" />
+      <inherit name="openable" />
+      <feature_container />
+      <openscript type="script">
+        UnlockExit (d1)
+        msg ("The door slides up and out of sight.")
+      </openscript>
+      <closescript type="script">
+      </closescript>
+      <scenery />
+      <visible />
+      <close type="boolean">false</close>
+      <isopen type="boolean">false</isopen>
+    </object>
+    <exit name="d1" alias="door" to="Hallway">
+      <inherit name="southdirection" />
+      <visible />
+      <locked />
+      <runscript type="boolean">false</runscript>
+      <scenery />
+      <alt type="stringlist">
+        <value>s</value>
+        <value>through door</value>
+      </alt>
+    </exit>
+  </object>
+  <object name="Hallway">
+    <inherit name="editor_room" />
+    <description>You are in the middle of a fairly long corridor lined with posters. To your right the hallway ends in a window. To your left it ends in a door. Also, there appears to be a body lying in front of you. </description>
+    <exit alias="north" to="a room">
+      <inherit name="northdirection" />
+    </exit>
+    <object name="body">
+      <inherit name="editor_object" />
+      <inherit name="male" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <scenery />
+      <look>It is a man in a suit. His shirt is stained with wine.</look>
+      <alt type="stringlist">
+        <value>body</value>
+      </alt>
+    </object>
+  </object>
+</asl>
