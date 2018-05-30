@@ -1,0 +1,24 @@
+<!--Saved by Quest 5.7.6606.27193-->
+<asl version="550">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Fun ???">
+    <inherit name="theme_novella" />
+    <gameid>dc6b7199-fac8-4df3-a47a-4b9f5a259ca1</gameid>
+    <version>1.0</version>
+    <firstpublished>2018</firstpublished>
+    <subtitle>An AP Calculus Project</subtitle>
+    <author><![CDATA[Dante & Brian]]></author>
+    <showtitle />
+    <cover>ppHop.gif</cover>
+    <description>AP Calculus Final Project</description>
+    <category>Educational</category>
+  </game>
+  <object name="room">
+    <inherit name="editor_room" />
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>
+  </object>
+</asl>
