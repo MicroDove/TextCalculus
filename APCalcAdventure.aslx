@@ -25,6 +25,7 @@
     <objectslistprefix>You can see</objectslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <flag />
+    <flagK />
     <description type="script">
       if (this.flagK) {
         msg ("It is empty save for the bed you are sitting on, a small nightstand to your left, and a poster to your right. On the stand there is a ticking clock, a glass of water, and a telephone. The floor is covered in clothing. There is a door with a keypad a few feet from the foot of the bed.")
@@ -33,7 +34,6 @@
         msg ("It is empty save for the bed you are sitting on, a small nightstand to your left, and a poster to your right. On the stand there is a ticking clock and glass of water. The nightstand has a drawer. The floor is covered in clothing. There is an open doorway a few feet from the foot of the bed.")
       }
     </description>
-    <flagK />
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
@@ -54,9 +54,9 @@
       <take type="boolean">false</take>
       <takemsg>It's firmly stuck to the table.</takemsg>
       <dropmsg>You place it carefully on the ground.</dropmsg>
+      <drop type="boolean">false</drop>
       <ontake type="script">
       </ontake>
-      <drop type="boolean">false</drop>
     </object>
     <object name="clothing">
       <inherit name="editor_object" />
@@ -76,13 +76,13 @@
       <visible />
       <close />
       <isopen />
+      <look>A brown, wooden door with a keypad set in the middle.</look>
       <openscript type="script">
         UnlockExit (d1)
         msg ("The door slides up and out of sight.")
       </openscript>
       <closescript type="script">
       </closescript>
-      <look>A brown, wooden door with a keypad set in the middle.</look>
     </object>
     <exit name="d1" alias="door" to="Hallway">
       <inherit name="southdirection" />
@@ -99,8 +99,9 @@
       <inherit name="editor_object" />
       <look>You could type something in.</look>
       <feature_usegive />
+      <scenery />
       <use type="script">
-        if (result="1234") {
+        if (result="1675") {
           UnlockExit (d1)
           msg ("A green light flashes. The door slides up and out of sight.")
           SetObjectFlagOff (a room, "flagK")
@@ -109,7 +110,6 @@
           msg ("A red light flashes then nothing.")
         }
       </use>
-      <scenery />
     </object>
     <object name="telephone">
       <inherit name="editor_object" />
@@ -125,15 +125,7 @@
       <openmsg>You hear a noise.</openmsg>
       <autounlock type="boolean">false</autounlock>
       <autoopen type="boolean">false</autoopen>
-      <onopen type="script">
-        msg ("The key to the door is the number of plankton in the glass to the nearest million. The plankton density is 0.2(h**2)e**(-0.0025*h**2).")
-      </onopen>
-      <onswitchon type="script">
-        do (this, "onlock")
-      </onswitchon>
       <feature_usegive />
-      <onunlock type="script">
-      </onunlock>
       <attr name="feature_switchable" type="boolean">false</attr>
       <contentsprefix>containing</contentsprefix>
       <hidechildren type="boolean">false</hidechildren>
@@ -142,6 +134,14 @@
       <alt type="stringlist">
         <value>phone</value>
       </alt>
+      <onopen type="script">
+        msg ("The key to the door is the number of plankton in the glass to the nearest million. The plankton density is 0.2(h**2)e**(-0.0025*h**2).")
+      </onopen>
+      <onswitchon type="script">
+        do (this, "onlock")
+      </onswitchon>
+      <onunlock type="script">
+      </onunlock>
       <use type="script">
         if (IsSwitchedOn(dTelephone)) {
           msg ("You hear a womans voice. \"The key is the number of plankton in the glass to the nearest million. At a depth of h centimeters, the density of plankton cells in millions of cells per cubic centimeter, is modeled by p(h) = 0.2h^2*e^(-0.0025*h^2).")
@@ -172,7 +172,7 @@
   </object>
   <object name="Hallway">
     <inherit name="editor_room" />
-    <description>You are in the middle of a fairly long corridor lined with posters. To your right the hallway ends in a window. To your left it ends in a door. Also, there appears to be a body lying in front of you. </description>
+    <description>You are in the middle of a fairly long corridor. To your right the hallway ends in a window. To your left it ends in a door. Also, there appears to be a body lying in front of you. </description>
     <exit alias="north" to="a room">
       <inherit name="northdirection" />
     </exit>
@@ -199,9 +199,9 @@
   </timer>
   <timer name="clockT">
     <interval>10</interval>
+    <enabled />
     <script>
       msg ("The clock beeps.")
     </script>
-    <enabled />
   </timer>
 </asl>
