@@ -27,10 +27,10 @@
     <flag />
     <description type="script">
       if (this.flagK) {
-        msg ("It is empty save for the bed you are sitting on and a a small nightstand to your left. On the stand there is a ticking clock, a glass of water, and a telephone. The floor is covered in clothing. There is a door with a keypad a few feet from the foot of the bed.")
+        msg ("It is empty save for the bed you are sitting on, a small nightstand to your left, and a poster to your right. On the stand there is a ticking clock, a glass of water, and a telephone. The floor is covered in clothing. There is a door with a keypad a few feet from the foot of the bed.")
       }
       else {
-        msg ("It is empty save for the bed you are sitting on and a a small nightstand to your left. On the stand there is a ticking clock and glass of water. The nightstand has a drawer. The floor is covered in clothing. There is an open doorway a few feet from the foot of the bed.")
+        msg ("It is empty save for the bed you are sitting on, a small nightstand to your left, and a poster to your right. On the stand there is a ticking clock and glass of water. The nightstand has a drawer. The floor is covered in clothing. There is an open doorway a few feet from the foot of the bed.")
       }
     </description>
     <flagK />
@@ -164,6 +164,11 @@
       <visible type="boolean">false</visible>
       <usedefaultprefix type="boolean">false</usedefaultprefix>
     </object>
+    <object name="poster">
+      <inherit name="editor_object" />
+      <scenery />
+      <look><![CDATA[The poster reads:<br/>When is the following piecewise function decreasing?<br/>ƒ(x):<br/>-((x-18)^2) for x <= -18<br/>sqrt(4-((x-20)^2)) for x>= -18<br/>]]></look>
+    </object>
   </object>
   <object name="Hallway">
     <inherit name="editor_room" />
@@ -183,13 +188,20 @@
     </object>
   </object>
   <timer name="drawer">
-    <interval>10</interval>
+    <interval>20</interval>
     <enabled />
     <script>
       SwitchOn (dTelephone)
-      SetTimeout (5) {
+      SetTimeout (2) {
         SwitchOff (dTelephone)
       }
     </script>
+  </timer>
+  <timer name="clockT">
+    <interval>10</interval>
+    <script>
+      msg ("The clock beeps.")
+    </script>
+    <enabled />
   </timer>
 </asl>
