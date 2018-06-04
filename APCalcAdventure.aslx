@@ -19,7 +19,7 @@
     <echohyperlinks type="boolean">false</echohyperlinks>
     <autodisplayverbs />
   </game>
-  <object name="a room">
+  <object name="Room">
     <inherit name="editor_room" />
     <descprefix>You are in</descprefix>
     <objectslistprefix>You can see</objectslistprefix>
@@ -172,8 +172,8 @@
   </object>
   <object name="Hallway">
     <inherit name="editor_room" />
-    <description>You are in the middle of a fairly long corridor. To your right the hallway ends in a window. To your left it ends in a door. Also, there appears to be a body lying in front of you. </description>
-    <exit alias="north" to="a room">
+    <description>You are in the middle of a fairly long corridor. To your right the hallway ends in a window. The window is leaking. To your left there is an exit. Also, there appears to be a body lying in front of you. </description>
+    <exit alias="north" to="Room">
       <inherit name="northdirection" />
     </exit>
     <object name="body">
@@ -186,6 +186,126 @@
         <value>body</value>
       </alt>
     </object>
+    <object name="windowOut">
+      <inherit name="editor_object" />
+      <scenery />
+      <look>It is raining.</look>
+      <alt type="stringlist">
+        <value>out window</value>
+        <value>outside</value>
+      </alt>
+    </object>
+    <object name="window">
+      <inherit name="editor_object" />
+      <scenery />
+      <look>It is leaking.</look>
+    </object>
+    <object name="leak">
+      <inherit name="editor_object" />
+      <look>You estimate that water is leaking in at a rate of (x-1)^2(x^3 +1) gallons per hour.</look>
+      <scenery />
+      <feature_usegive />
+      <useon type="scriptdictionary">
+        <item key="towels">
+          msg ("How many? You don't want to waste any.")
+          if (result = "7") {
+            msg ("You cover the leak with towels, confident that they will absorb the water.")
+          }
+          else {
+            msg ("That won't work.")
+          }
+        </item>
+      </useon>
+    </object>
+    <exit alias="west" to="Kitchen">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Kitchen">
+    <inherit name="editor_room" />
+    <description>The room is quaint. There is a stove, a cabinet, and a sink. Curiously, there are no tables or chairs. There is an exit to the right, leading to the hallway, and one to the north.</description>
+    <exit alias="east" to="Hallway">
+      <inherit name="eastdirection" />
+    </exit>
+    <object name="stove">
+      <inherit name="editor_object" />
+      <scenery />
+    </object>
+    <object name="cabinet">
+      <inherit name="editor_object" />
+      <inherit name="container_open" />
+      <feature_container />
+      <scenery />
+      <isopen />
+      <openmsg>a roll of paper towels, a dozen eggs, soap, and a sponge.</openmsg>
+      <onopen type="script">
+        MakeObjectVisible (soap)
+        MakeObjectVisible (sponge)
+        MakeObjectVisible (towels)
+        MakeObjectVisible (eggs)
+      </onopen>
+      <onclose type="script">
+        MakeObjectInvisible (eggs)
+        MakeObjectInvisible (soap)
+        MakeObjectInvisible (sponge)
+        MakeObjectInvisible (towels)
+      </onclose>
+      <transparent type="boolean">false</transparent>
+      <look>It is a kitchen cabinet.</look>
+    </object>
+    <object name="sink">
+      <inherit name="editor_object" />
+      <scenery />
+    </object>
+    <object name="towels">
+      <inherit name="editor_object" />
+      <scenery />
+      <visible type="boolean">false</visible>
+      <take />
+      <takemsg>You take the towels</takemsg>
+      <look>The lable claims they are able to absorb .05 gallons each.</look>
+    </object>
+    <object name="eggs">
+      <inherit name="editor_object" />
+      <scenery />
+      <visible type="boolean">false</visible>
+    </object>
+    <object name="soap">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <scenery />
+    </object>
+    <object name="sponge">
+      <inherit name="editor_object" />
+      <visible type="boolean">false</visible>
+      <scenery />
+    </object>
+    <exit alias="north" to="Mudroom">
+      <inherit name="northdirection" />
+      <scenery />
+    </exit>
+  </object>
+  <object name="Mudroom">
+    <inherit name="editor_room" />
+    <description>The floor is impermeable plastic. There is a mirror on the wall next to a light switch. The doorway to the south leads to the kitchen. The door to the north leads outside. </description>
+    <exit alias="north" to="Outside">
+      <inherit name="northdirection" />
+    </exit>
+    <object name="leakSwitch">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <visible type="boolean">false</visible>
+      <feature_switchable />
+    </object>
+    <object name="dE">
+      <inherit name="editor_object" />
+      <scenery />
+      <look>A metal door to the outside.</look>
+    </object>
+  </object>
+  <object name="Outside">
+    <inherit name="editor_room" />
   </object>
   <timer name="drawer">
     <interval>20</interval>
