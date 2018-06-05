@@ -144,7 +144,7 @@
       </onunlock>
       <use type="script">
         if (IsSwitchedOn(dTelephone)) {
-          msg ("You hear a womans voice. \"The key is the number of plankton in the glass to the nearest million. At a depth of h centimeters, the density of plankton cells in millions of cells per cubic centimeter, is modeled by p(h) = 0.2h^2*e^(-0.0025*h^2).")
+          msg ("You hear a womans voice. \"The key is the number of dust particles in the glass to the nearest million. At a depth of h centimeters, the density of dust particles in millions per cubic centimeter, is modeled by d(h) = 0.2h^2*e^(-0.0025*h^2).")
         }
         else {
           msg ("You hear static.")
@@ -210,6 +210,7 @@
           msg ("How many? You don't want to waste any.")
           if (result = "7") {
             msg ("You cover the leak with towels, confident that they will absorb the water.")
+            SwitchOn (leakSwitch)
           }
           else {
             msg ("That won't work.")
@@ -237,7 +238,9 @@
       <feature_container />
       <scenery />
       <isopen />
-      <openmsg>a roll of paper towels, a dozen eggs, soap, and a sponge.</openmsg>
+      <openmsg>paper towels, eggs, soap, sponges.</openmsg>
+      <transparent type="boolean">false</transparent>
+      <look>It is a kitchen cabinet.</look>
       <onopen type="script">
         MakeObjectVisible (soap)
         MakeObjectVisible (sponge)
@@ -250,8 +253,6 @@
         MakeObjectInvisible (sponge)
         MakeObjectInvisible (towels)
       </onclose>
-      <transparent type="boolean">false</transparent>
-      <look>It is a kitchen cabinet.</look>
     </object>
     <object name="sink">
       <inherit name="editor_object" />
@@ -282,15 +283,42 @@
     </object>
     <exit alias="north" to="Mudroom">
       <inherit name="northdirection" />
-      <scenery />
     </exit>
   </object>
   <object name="Mudroom">
     <inherit name="editor_room" />
-    <description>The floor is impermeable plastic. There is a mirror on the wall next to a light switch. The doorway to the south leads to the kitchen. The door to the north leads outside. </description>
-    <exit alias="north" to="Outside">
+    <description>The floor is impermeable plastic. There is a mirror on the wall next to a light switch. The doorway to the south leads to the kitchen. The doorway to the north leads outside.</description>
+    <firstenter type="script">
+      msg ("You trip as you enter the room, hitting your head on the doorframe. You realize that the lights have been off this whole time. You remember the light switch is 10 meters from the door. You can manage to stumble to the light switch at a straight-line velocity modeled by x^2 in m/s. ")
+      msg ("How long do you stumble to the nearest second?")
+      if (result = "3") {
+        SwitchOn (light)
+      }
+      else {
+        msg ("You miss!")
+        msg ("You smash your head on the ground!!")
+        msg ("You feel yourself fading!!!")
+        PrintCentered ("You die and miss the test.")
+        finish
+      }
+    </firstenter>
+    <exit name="exitOutside" alias="north" to="Outside">
       <inherit name="northdirection" />
+      <locked />
+      <visible />
+      <scenery />
+      <lockmessage>You don't feel confident you have finished your tasks. You can't leave yet.</lockmessage>
     </exit>
+    <exit alias="south" to="Kitchen">
+      <inherit name="southdirection" />
+      <scenery />
+    </exit>
+    <object name="light">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <feature_switchable />
+      <scenery />
+    </object>
     <object name="leakSwitch">
       <inherit name="editor_object" />
       <inherit name="switchable" />
@@ -298,14 +326,17 @@
       <visible type="boolean">false</visible>
       <feature_switchable />
     </object>
-    <object name="dE">
+    <object name="mirror">
       <inherit name="editor_object" />
       <scenery />
-      <look>A metal door to the outside.</look>
     </object>
   </object>
   <object name="Outside">
     <inherit name="editor_room" />
+    <exit alias="south" to="Mudroom">
+      <inherit name="southdirection" />
+      <scenery />
+    </exit>
   </object>
   <timer name="drawer">
     <interval>20</interval>
@@ -322,6 +353,16 @@
     <enabled />
     <script>
       msg ("The clock beeps.")
+    </script>
+  </timer>
+  <timer name="outCondition">
+    <interval>10</interval>
+    <enabled />
+    <script>
+      if (IsSwitchedOn(leakSwitch)) {
+        if () {
+        }
+      }
     </script>
   </timer>
 </asl>
