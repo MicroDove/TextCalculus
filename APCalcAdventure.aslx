@@ -4,7 +4,7 @@
   <include ref="Core.aslx" />
   <game name="Calculus Fever">
     <inherit name="theme_novella" />
-    <gameid>dc6b7199-fac8-4df3-a47a-4b9f5a259ca1</gameid>
+    <gameid>7b6fd8c4-eb1f-4f13-bdf0-6445484f326a</gameid>
     <version>2.0</version>
     <firstpublished>2018</firstpublished>
     <subtitle>An AP Calculus Project</subtitle>
@@ -102,15 +102,18 @@
       <feature_usegive />
       <scenery />
       <use type="script">
-        if (result="1675") {
-          UnlockExit (d1)
-          msg ("A green light flashes. The door slides up and out of sight.")
-          SetObjectFlagOff (a room, "flagK")
-          DisableTimer (clockT)
-          DisableTimer (drawer)
-        }
-        else {
-          msg ("A red light flashes then nothing.")
+        msg ("Enter code.")
+        get input {
+          if (result="1675") {
+            UnlockExit (d1)
+            msg ("A green light flashes. The door slides up and out of sight.")
+            SetObjectFlagOff (a room, "flagK")
+            DisableTimer (clockT)
+            DisableTimer (drawer)
+          }
+          else {
+            msg ("A red light flashes then nothing.")
+          }
         }
       </use>
     </object>
@@ -211,12 +214,14 @@
       <useon type="scriptdictionary">
         <item key="towels">
           msg ("How many? You don't want to waste any.")
-          if (result = "7") {
-            msg ("You cover the leak with towels, confident that they will absorb the water.")
-            SwitchOn (leakSwitch)
-          }
-          else {
-            msg ("That won't work.")
+          get input {
+            if (result = "7") {
+              msg ("You cover the leak with towels, confident that they will absorb the water.")
+              SwitchOn (leakSwitch)
+            }
+            else {
+              msg ("That won't work.")
+            }
           }
         </item>
       </useon>
@@ -302,12 +307,14 @@
           if (Got(soap)) {
             msg ("The rate at which soap flows into the sponge is modeled by G(t) = 90 + 45cos((t^2)/18), where t is measured in minutes and 0<t<8. The sponge already has 500ml of soap already in it.While you pour the sponge drips soap at a constant rate of 100 milliters per minute.")
             msg ("At what time, to the nearest second, will the ammount of soap on the sponge be greatest? ")
-            if (result = "5") {
-              msg ("You have washed the dishes.")
-              SwitchOn (washSwitch)
-            }
-            else {
-              msg ("That is not correct. The dishes are still dirty. ")
+            get input {
+              if (result = "5") {
+                msg ("You have washed the dishes.")
+                SwitchOn (washSwitch)
+              }
+              else {
+                msg ("That is not correct. The dishes are still dirty. ")
+              }
             }
           }
           else {
@@ -326,15 +333,17 @@
     <firstenter type="script">
       msg ("You trip as you enter the room, hitting your head on the doorframe. You realize that the lights have been off this whole time. You remember the light switch is 10 meters from the door. You can manage to stumble to the light switch at a straight-line velocity modeled by x^2 in m/s. ")
       msg ("How long do you stumble to the nearest second?")
-      if (result = "3") {
-        SwitchOn (light)
-      }
-      else {
-        msg ("You miss!")
-        msg ("You smash your head on the ground!!")
-        msg ("You feel yourself fading!!!")
-        PrintCentered ("You die and miss the test.")
-        finish
+      get input {
+        if (result = "3") {
+          SwitchOn (light)
+        }
+        else {
+          msg ("You miss!")
+          msg ("You smash your head on the ground!!")
+          msg ("You feel yourself fading!!!")
+          PrintCentered ("You die and miss the test.")
+          finish
+        }
       }
     </firstenter>
     <exit name="exitOutside" alias="north" to="Outside">
@@ -357,12 +366,14 @@
         msg ("The light is now on. You notice that your shadow is moving as you move away from the light. You decide to practice for your calculus test.")
         msg ("You're walking away from the light at a rate 1.5 m/s. What is the maximum speed of your shadow?")
         picture ("RelRates_LightPoleTrianglesAway.png")
-        if (result = "2.1") {
-          msg ("You feel confident.")
-        }
-        else {
-          msg ("You realize that your calc skills are not up to par and become depressed. You go back to bed and miss the test.")
-          finish
+        get input {
+          if (result = "2.1") {
+            msg ("You feel confident.")
+          }
+          else {
+            msg ("You realize that your calc skills are not up to par and become depressed. You go back to bed and miss the test.")
+            finish
+          }
         }
       </onswitchon>
     </object>
@@ -391,23 +402,25 @@
       msg ("You suddenly feel the inexplicable need to pull out all the weeds in your garden. ")
       msg ("You think it would be a good idea to remove half the weeds every hour.")
       msg ("Will you ever finish?")
-      if (Yes) {
-        msg ("You begin.")
-        finish
-      }
-      else if (yes) {
-        msg ("You begin.")
-        finish
-      }
-      else if (No) {
-        msg ("Exactly.")
-      }
-      else if (no) {
-        msg ("Exactly.")
-      }
-      else {
-        msg ("Be smart next time.")
-        finish
+      get input {
+        if (Yes) {
+          msg ("You begin.")
+          finish
+        }
+        else if (yes) {
+          msg ("You begin.")
+          finish
+        }
+        else if (No) {
+          msg ("Exactly.")
+        }
+        else if (no) {
+          msg ("Exactly.")
+        }
+        else {
+          msg ("Be smart next time.")
+          finish
+        }
       }
     </firstenter>
     <exit alias="south" to="Mudroom">
@@ -422,193 +435,243 @@
         msg ("You get in the car and set off.")
         msg ("The velocity of your car is modeled by sin(t+1), where t is in seconds.")
         msg ("What models the acceleration?")
-        if (result = "cos(t+1)") {
-          msg ("You arrive to the testing center.")
-          msg ("You go inside and find a seat.")
-          msg ("The proctor hands out tests.")
-          PrintCentered ("You begin the test.")
-        }
-        else {
-          msg ("You die in a car crash.")
-          finish
+        get input {
+          if (result = "cos(t+1)") {
+            msg ("You arrive to the testing center.")
+            msg ("You go inside and find a seat.")
+            msg ("The proctor hands out tests.")
+            PrintCentered ("You begin the test.")
+          }
+          else {
+            msg ("You die in a car crash.")
+            finish
+          }
         }
         msg ("Type in the answer as a capital letter after each question. There is no time limit, but you must get them all right to succeed.")
         picture ("1.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("2.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("3.PNG")
-        if (result = "C") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("4.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("5.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("6.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture7.PNG")
-        if (result = "D") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture8.PNG")
-        if (result = "D") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture9.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture10.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture11.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture12.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture13.PNG")
-        if (result = "D") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture14.PNG")
-        if (result = "C") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture15.PNG")
-        if (result = "D") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture16.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture17.PNG")
-        if (result = "A") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture18.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture19.PNG")
-        if (result = "C") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture20.PNG")
-        if (result = "D") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture21.PNG")
-        if (result = "E") {
-          msg ("Naisu!")
-        }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
+        get input {
+          if (result = "E") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
         picture ("Capture22.PNG")
-        if (result = "B") {
-          msg ("Naisu!")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
         }
-        else {
-          msg ("NANI! omae wa mou shindeiru.")
-          finish
-        }
+        ClearScreen
+        PrintCentered ("YOU WIN")
+        ShowYouTube ("gQhJMvJDSZA")
+        ClearScreen
       </drive>
     </object>
     <object name="tree">
