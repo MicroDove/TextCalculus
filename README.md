@@ -1,4 +1,4 @@
-# TextCalculus 1.5
+# TextCalculus 2.0
 
 AP Calc final project a text based adventure
 
