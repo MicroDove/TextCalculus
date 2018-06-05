@@ -5,7 +5,7 @@
   <game name="Calculus Fever">
     <inherit name="theme_novella" />
     <gameid>dc6b7199-fac8-4df3-a47a-4b9f5a259ca1</gameid>
-    <version>1.5</version>
+    <version>2.0</version>
     <firstpublished>2018</firstpublished>
     <subtitle>An AP Calculus Project</subtitle>
     <author><![CDATA[Brian & Dante]]></author>
@@ -37,6 +37,7 @@
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
+      <scenery type="boolean">false</scenery>
     </object>
     <object name="glass">
       <inherit name="editor_object" />
@@ -429,6 +430,183 @@
         }
         else {
           msg ("You die in a car crash.")
+          finish
+        }
+        msg ("Type in the answer as a capital letter after each question. There is no time limit, but you must get them all right to succeed.")
+        picture ("1.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("2.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("3.PNG")
+        if (result = "C") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("4.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("5.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("6.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture7.PNG")
+        if (result = "D") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture8.PNG")
+        if (result = "D") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture9.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture10.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture11.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture12.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture13.PNG")
+        if (result = "D") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture14.PNG")
+        if (result = "C") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture15.PNG")
+        if (result = "D") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture16.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture17.PNG")
+        if (result = "A") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture18.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture19.PNG")
+        if (result = "C") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture20.PNG")
+        if (result = "D") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture21.PNG")
+        if (result = "E") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+        picture ("Capture22.PNG")
+        if (result = "B") {
+          msg ("Naisu!")
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
           finish
         }
       </drive>
