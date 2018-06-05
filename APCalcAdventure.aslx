@@ -5,7 +5,7 @@
   <game name="Calculus Fever">
     <inherit name="theme_novella" />
     <gameid>dc6b7199-fac8-4df3-a47a-4b9f5a259ca1</gameid>
-    <version>1.0</version>
+    <version>1.5</version>
     <firstpublished>2018</firstpublished>
     <subtitle>An AP Calculus Project</subtitle>
     <author><![CDATA[Brian & Dante]]></author>
@@ -105,6 +105,8 @@
           UnlockExit (d1)
           msg ("A green light flashes. The door slides up and out of sight.")
           SetObjectFlagOff (a room, "flagK")
+          DisableTimer (clockT)
+          DisableTimer (drawer)
         }
         else {
           msg ("A red light flashes then nothing.")
@@ -167,7 +169,7 @@
     <object name="poster">
       <inherit name="editor_object" />
       <scenery />
-      <look><![CDATA[The poster reads:<br/>When is the following piecewise function decreasing?<br/>ƒ(x):<br/>-((x-18)^2) for x <= -18<br/>sqrt(4-((x-20)^2)) for x>= -18<br/>]]></look>
+      <look><![CDATA[The poster reads:<br/>I am expecting a call when the function is decreasing?<br/>ƒ(x):<br/>-((x-18)^2) for x <= -18<br/>sqrt(4-((x-20)^2)) for x>= -18<br/>]]></look>
     </object>
   </object>
   <object name="Hallway">
@@ -231,6 +233,7 @@
     <object name="stove">
       <inherit name="editor_object" />
       <scenery />
+      <look>There is a note on the stove. It reads "I have a calculus test tomorrow! I will be away for an hour at most."</look>
     </object>
     <object name="cabinet">
       <inherit name="editor_object" />
@@ -257,6 +260,7 @@
     <object name="sink">
       <inherit name="editor_object" />
       <scenery />
+      <look><![CDATA[{if washSwitch.switchedon= True: The sink is filled with clean dishes.}<br/>{if washSwitch.switchedon= False: The sink is filled with dirty dishes.}]]></look>
     </object>
     <object name="towels">
       <inherit name="editor_object" />
@@ -275,15 +279,45 @@
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
       <scenery />
+      <take />
     </object>
     <object name="sponge">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
       <scenery />
+      <take />
     </object>
     <exit alias="north" to="Mudroom">
       <inherit name="northdirection" />
     </exit>
+    <object name="dishes">
+      <inherit name="editor_object" />
+      <scenery />
+      <visible />
+      <look><![CDATA[{if washSwitch.switchedon= True: A pile of clean dishes}<br/>{if washSwitch.switchedon= False: A pile of dirty dishes}]]></look>
+      <feature_usegive />
+      <wash type="script"><![CDATA[
+        if (Got(sponge)) {
+          if (Got(soap)) {
+            msg ("The rate at which soap flows into the sponge is modeled by G(t) = 90 + 45cos((t^2)/18), where t is measured in minutes and 0<t<8. The sponge already has 500ml of soap already in it.While you pour the sponge drips soap at a constant rate of 100 milliters per minute.")
+            msg ("At what time, to the nearest second, will the ammount of soap on the sponge be greatest? ")
+            if (result = "5") {
+              msg ("You have washed the dishes.")
+              SwitchOn (washSwitch)
+            }
+            else {
+              msg ("That is not correct. The dishes are still dirty. ")
+            }
+          }
+          else {
+            msg ("You forgot something")
+          }
+        }
+        else {
+          msg ("You forgot something")
+        }
+      ]]></wash>
+    </object>
   </object>
   <object name="Mudroom">
     <inherit name="editor_room" />
@@ -318,6 +352,18 @@
       <inherit name="switchable" />
       <feature_switchable />
       <scenery />
+      <onswitchon type="script">
+        msg ("The light is now on. You notice that your shadow is moving as you move away from the light. You decide to practice for your calculus test.")
+        msg ("You're walking away from the light at a rate 1.5 m/s. What is the maximum speed of your shadow?")
+        picture ("RelRates_LightPoleTrianglesAway.png")
+        if (result = "2.1") {
+          msg ("You feel confident.")
+        }
+        else {
+          msg ("You realize that your calc skills are not up to par and become depressed. You go back to bed and miss the test.")
+          finish
+        }
+      </onswitchon>
     </object>
     <object name="leakSwitch">
       <inherit name="editor_object" />
@@ -329,15 +375,80 @@
     <object name="mirror">
       <inherit name="editor_object" />
       <scenery />
+      <look>You look good.</look>
+    </object>
+    <object name="washSwitch">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <feature_switchable />
+      <switchedon type="boolean">false</switchedon>
     </object>
   </object>
   <object name="Outside">
     <inherit name="editor_room" />
+    <firstenter type="script">
+      msg ("You suddenly feel the inexplicable need to pull out all the weeds in your garden. ")
+      msg ("You think it would be a good idea to remove half the weeds every hour.")
+      msg ("Will you ever finish?")
+      if (Yes) {
+        msg ("You begin.")
+        finish
+      }
+      else if (yes) {
+        msg ("You begin.")
+        finish
+      }
+      else if (No) {
+        msg ("Exactly.")
+      }
+      else if (no) {
+        msg ("Exactly.")
+      }
+      else {
+        msg ("Be smart next time.")
+        finish
+      }
+    </firstenter>
     <exit alias="south" to="Mudroom">
       <inherit name="southdirection" />
       <scenery />
     </exit>
+    <object name="car">
+      <inherit name="editor_object" />
+      <scenery />
+      <alt type="stringlist" />
+      <drive type="script">
+        msg ("You get in the car and set off.")
+        msg ("The velocity of your car is modeled by sin(t+1), where t is in seconds.")
+        msg ("What models the acceleration?")
+        if (result = "cos(t+1)") {
+          msg ("You arrive to the testing center.")
+          msg ("You go inside and find a seat.")
+          msg ("The proctor hands out tests.")
+          PrintCentered ("You begin the test.")
+        }
+        else {
+          msg ("You die in a car crash.")
+          finish
+        }
+      </drive>
+    </object>
+    <object name="tree">
+      <inherit name="editor_object" />
+      <look>A large oak tree, probably around 150 years old, with large leaves. It is about the size of your house. </look>
+      <scenery />
+    </object>
   </object>
+  <verb>
+    <property>wash</property>
+    <pattern>wash</pattern>
+    <defaultexpression>"You can't wash " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>drive</property>
+    <pattern>drive</pattern>
+    <defaultexpression>"You can't drive " + object.article + "."</defaultexpression>
+  </verb>
   <timer name="drawer">
     <interval>20</interval>
     <enabled />
@@ -356,11 +467,14 @@
     </script>
   </timer>
   <timer name="outCondition">
-    <interval>10</interval>
+    <interval>5</interval>
     <enabled />
     <script>
       if (IsSwitchedOn(leakSwitch)) {
-        if () {
+        if (IsSwitchedOn(washSwitch)) {
+          UnlockExit (exitOutside)
+          msg ("You feel ready for your test. Time to go outside!")
+          DisableTimer (outCondition)
         }
       }
     </script>
