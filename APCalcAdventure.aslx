@@ -2,16 +2,16 @@
 <asl version="550">
   <include ref="English.aslx" />
   <include ref="Core.aslx" />
-  <game name="Calculus Fever">
+  <game name="Calculus Fever 2.0">
     <inherit name="theme_novella" />
-    <gameid>7b6fd8c4-eb1f-4f13-bdf0-6445484f326a</gameid>
+    <gameid>6768b4e0-8c32-4c64-b890-a8c7156787b2</gameid>
     <version>2.0</version>
     <firstpublished>2018</firstpublished>
     <subtitle>An AP Calculus Project</subtitle>
     <author><![CDATA[Brian & Dante]]></author>
     <showtitle />
     <cover>ppHop.gif</cover>
-    <description>AP Calculus Final Project</description>
+    <description><![CDATA[You wake up on the day of your calculus test. Get ready and go outside. It's time to go!<br/>AP Calculus Final Project<br/>VERY HARD! VERY FUN! VERY HIGH GRADE PLEASE! ]]></description>
     <category>Educational</category>
     <attr name="autodescription_youarein_useprefix" type="boolean">false</attr>
     <attr name="autodescription_youcansee" type="int">3</attr>
@@ -69,7 +69,7 @@
       </alt>
       <takemsg>It sticks to the ground.</takemsg>
     </object>
-    <object name="door">
+    <object name="doorway">
       <inherit name="editor_object" />
       <inherit name="openable" />
       <attr name="feature_container" type="boolean">false</attr>
@@ -84,8 +84,9 @@
       </openscript>
       <closescript type="script">
       </closescript>
+      <alias>doorway</alias>
     </object>
-    <exit name="d1" alias="door" to="Hallway">
+    <exit name="d1" alias="doorway" to="Hallway">
       <inherit name="southdirection" />
       <visible />
       <locked />
@@ -94,7 +95,9 @@
       <alt type="stringlist">
         <value>s</value>
         <value>through door</value>
+        <value>through doorway</value>
       </alt>
+      <message>The door closes and locks behind you.</message>
     </exit>
     <object name="keypad">
       <inherit name="editor_object" />
@@ -107,7 +110,7 @@
           if (result="1675") {
             UnlockExit (d1)
             msg ("A green light flashes. The door slides up and out of sight.")
-            SetObjectFlagOff (a room, "flagK")
+            SetObjectFlagOff (Room, "flagK")
             DisableTimer (clockT)
             DisableTimer (drawer)
           }
@@ -178,7 +181,7 @@
   </object>
   <object name="Hallway">
     <inherit name="editor_room" />
-    <description>You are in the middle of a fairly long corridor. To your right the hallway ends in a window. The window is leaking. To your left there is an exit. Also, there appears to be a body lying in front of you. </description>
+    <description>You are in the middle of a corridor. You see a winow. The window is leaking. To your west there is an exit. Also, there appears to be a body lying in front of you. </description>
     <exit alias="north" to="Room">
       <inherit name="northdirection" />
     </exit>
@@ -246,7 +249,7 @@
       <inherit name="container_open" />
       <feature_container />
       <scenery />
-      <isopen />
+      <isopen type="boolean">false</isopen>
       <openmsg>paper towels, eggs, soap, sponges.</openmsg>
       <transparent type="boolean">false</transparent>
       <look>It is a kitchen cabinet.</look>
@@ -273,25 +276,39 @@
       <scenery />
       <visible type="boolean">false</visible>
       <take />
-      <takemsg>You take the towels</takemsg>
+      <takemsg>You take the towels.</takemsg>
       <look>The lable claims they are able to absorb .05 gallons each.</look>
+      <ontake type="script">
+        AddToInventory (towels)
+        MoveObject (towels, Hallway)
+      </ontake>
+      <alt type="stringlist">
+        <value>paper towels</value>
+      </alt>
     </object>
     <object name="eggs">
       <inherit name="editor_object" />
       <scenery />
       <visible type="boolean">false</visible>
+      <take />
     </object>
     <object name="soap">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
       <scenery />
       <take />
+      <ontake type="script">
+        AddToInventory (soap)
+      </ontake>
     </object>
     <object name="sponge">
       <inherit name="editor_object" />
       <visible type="boolean">false</visible>
       <scenery />
       <take />
+      <ontake type="script">
+        AddToInventory (sponge)
+      </ontake>
     </object>
     <exit alias="north" to="Mudroom">
       <inherit name="northdirection" />
@@ -394,6 +411,7 @@
       <inherit name="switchable" />
       <feature_switchable />
       <switchedon type="boolean">false</switchedon>
+      <scenery />
     </object>
   </object>
   <object name="Outside">
@@ -403,18 +421,18 @@
       msg ("You think it would be a good idea to remove half the weeds every hour.")
       msg ("Will you ever finish?")
       get input {
-        if (Yes) {
+        if (result = "Yes") {
           msg ("You begin.")
           finish
         }
-        else if (yes) {
+        else if (result = "yes") {
           msg ("You begin.")
           finish
         }
-        else if (No) {
+        else if (result = "No") {
           msg ("Exactly.")
         }
-        else if (no) {
+        else if (result = "no") {
           msg ("Exactly.")
         }
         else {
@@ -441,237 +459,13 @@
             msg ("You go inside and find a seat.")
             msg ("The proctor hands out tests.")
             PrintCentered ("You begin the test.")
+            MoveObject (player, Test)
           }
           else {
             msg ("You die in a car crash.")
             finish
           }
         }
-        msg ("Type in the answer as a capital letter after each question. There is no time limit, but you must get them all right to succeed.")
-        picture ("1.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("2.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("3.PNG")
-        get input {
-          if (result = "C") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("4.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("5.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("6.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture7.PNG")
-        get input {
-          if (result = "D") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture8.PNG")
-        get input {
-          if (result = "D") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture9.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture10.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture11.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture12.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture13.PNG")
-        get input {
-          if (result = "D") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture14.PNG")
-        get input {
-          if (result = "C") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture15.PNG")
-        get input {
-          if (result = "D") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture16.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture17.PNG")
-        get input {
-          if (result = "A") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture18.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture19.PNG")
-        get input {
-          if (result = "C") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture20.PNG")
-        get input {
-          if (result = "D") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture21.PNG")
-        get input {
-          if (result = "E") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        picture ("Capture22.PNG")
-        get input {
-          if (result = "B") {
-            msg ("Naisu!")
-          }
-          else {
-            msg ("NANI! omae wa mou shindeiru.")
-            finish
-          }
-        }
-        ClearScreen
-        PrintCentered ("YOU WIN")
-        ShowYouTube ("gQhJMvJDSZA")
-        ClearScreen
       </drive>
     </object>
     <object name="tree">
@@ -690,6 +484,433 @@
     <pattern>drive</pattern>
     <defaultexpression>"You can't drive " + object.article + "."</defaultexpression>
   </verb>
+  <object name="Test">
+    <inherit name="editor_room" />
+    <firstenter type="script">
+      msg ("Type in the answer as a capital letter after each question. There is no time limit, but you must get them all right to succeed.")
+      picture ("1.PNG")
+      get input {
+        if (result = "B") {
+          msg ("Naisu!")
+          SwitchOn (q2)
+        }
+        else {
+          msg ("NANI! omae wa mou shindeiru.")
+          finish
+        }
+      }
+    </firstenter>
+    <object name="q2">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("2.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (q3)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q3">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("3.PNG")
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+            SwitchOn (q4)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q4">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("4.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q5)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q5">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("5.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q6)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q6">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("6.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (q7)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q7">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture7.PNG")
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+            SwitchOn (q8)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q8">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture8.PNG")
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+            SwitchOn (q9)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q9">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture9.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (q10)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q10">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture10.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q11)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q11">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture11.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q12)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q12">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture12.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q13)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q13">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture13.PNG")
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+            SwitchOn (q14)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q14">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture14.PNG")
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+            SwitchOn (q15)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q15">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture15.PNG")
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+            SwitchOn (q16)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q16">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture16.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (q17)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q17">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture17.PNG")
+        get input {
+          if (result = "A") {
+            msg ("Naisu!")
+            SwitchOn (q18)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q18">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture18.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (q19)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q19">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture19.PNG")
+        get input {
+          if (result = "C") {
+            msg ("Naisu!")
+            SwitchOn (q20)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q20">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture20.PNG")
+        get input {
+          if (result = "D") {
+            msg ("Naisu!")
+            SwitchOn (q21)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q21">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture21.PNG")
+        get input {
+          if (result = "E") {
+            msg ("Naisu!")
+            SwitchOn (q22)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="q22">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <scenery />
+      <feature_switchable />
+      <onswitchon type="script">
+        picture ("Capture22.PNG")
+        get input {
+          if (result = "B") {
+            msg ("Naisu!")
+            SwitchOn (WIN)
+          }
+          else {
+            msg ("NANI! omae wa mou shindeiru.")
+            finish
+          }
+        }
+      </onswitchon>
+    </object>
+    <object name="WIN">
+      <inherit name="editor_object" />
+      <inherit name="switchable" />
+      <feature_switchable />
+      <onswitchon type="script">
+        PrintCentered ("YOU WIN")
+        ShowYouTube ("gQhJMvJDSZA")
+        PrintCentered ("YOU WIN")
+      </onswitchon>
+      <scenery />
+    </object>
+  </object>
   <timer name="drawer">
     <interval>20</interval>
     <enabled />
